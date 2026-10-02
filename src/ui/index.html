@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:">
+  <title>Wipi</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="graphite">
+  <main id="app" class="app">
+    <section class="bar" aria-label="Barra de actividad. Arrastrá para mover">
+      <div class="coffee-icon" aria-hidden="true">
+        <div class="steam"><i></i><i></i><i></i></div>
+        <svg viewBox="0 0 48 48" class="cup"><path class="cup-body" d="M9 20h25v11a10 10 0 0 1-10 10h-5A10 10 0 0 1 9 31V20Z"/><path class="cup-handle" d="M34 23h3a6 6 0 0 1 0 12h-4"/><path class="coffee" d="M10 25c7 2 16 2 23 0"/><path class="saucer" d="M8 42h29"/></svg>
+      </div>
+      <div class="message">
+        <div class="eyebrow"><span class="live-dot"></span><span id="source">WIPI · LOFI FOCUS</span></div>
+        <div class="title" id="title">Tu espacio está listo</div>
+        <div class="subtitle" id="subtitle">Arrastrá esta barra a tu lugar favorito.</div>
+      </div>
+      <div class="active-badge" id="active-badge" title="Tareas en curso">0</div>
+      <button class="toggle" id="toggle" title="Ver proyectos y actividad" aria-label="Ver proyectos y actividad"><svg viewBox="0 0 20 20"><path d="m5 8 5 5 5-5"/></svg></button>
+      <div class="bar-progress" id="bar-progress"></div>
+    </section>
+    <section class="panel" aria-label="Procesos y notificaciones">
+      <div class="panel-header">
+        <div><span class="kicker">TU ESTUDIO EN VIVO</span><h1>Focus desk <span class="sparkle">✦</span></h1></div>
+        <button class="close" id="close" aria-label="Cerrar">×</button>
+      </div>
+      <div class="panel-scroll">
+        <div class="section-heading"><span>EN CURSO</span><span id="running-label">0 tareas</span></div>
+        <div class="activities" id="activities"></div>
+        <div class="section-heading recent-heading"><span>RECIENTES</span><span>ÚLTIMOS AVISOS</span></div>
+        <div class="events" id="events"></div>
+      </div>
+      <div class="panel-footer">
+        <div class="footer-left"><span class="tiny-dot"></span><span>ARRASTRÁ PARA MOVER</span></div>
+        <div class="swatches" id="swatches" aria-label="Tema de color"></div>
+        <button id="test" class="test">Probar</button>
+      </div>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
