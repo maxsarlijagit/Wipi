@@ -74,7 +74,7 @@ Esta integración cubre Claude Code CLI y la pestaña Code de Claude Desktop en 
 4. En la bandeja de Windows, abrí **Abrir carpeta de configuración** y copiá el valor `token` de `settings.json`.
 5. Pegalo en el popup de la extensión, pulsá **Guardar** y luego **Probar**.
 
-Si la prueba funciona, ChatGPT web avisa al terminar una respuesta. El conector no cubre ChatGPT Desktop ni muestra respuestas en curso.
+Si la prueba funciona, ChatGPT web avisa al terminar una respuesta. Esta extensión no cubre la app ChatGPT para Windows ni muestra respuestas en curso. Wipi sigue por separado las tareas Work locales de esa app mediante las sesiones de Codex; consultá [integraciones y estados](integrations.md).
 
 ## Si algo no aparece
 

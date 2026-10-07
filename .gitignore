@@ -7,3 +7,16 @@ dist/
 coverage/
 Thumbs.db
 .DS_Store
+
+# Local account settings and notification credentials.
+.claude/
+.codex/
+settings.json
+settings.json.wipi-backup
+config.toml
+config.toml.wipi-backup
+previous-notify.json
+.npmrc
+*.pem
+*.p12
+*.pfx

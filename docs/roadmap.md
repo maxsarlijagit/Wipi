@@ -1,9 +1,9 @@
 # Ideas para próximas versiones
 
-Estas son propuestas, **no funciones disponibles en Wipi 0.3.0**.
+Estas son propuestas, **no funciones disponibles en Wipi 0.4.0**.
 
 - Mostrar respuestas en curso de ChatGPT web sin depender de selectores frágiles.
-- Explorar una integración compatible con ChatGPT Desktop si existe una fuente de eventos pública y estable.
+- Explorar una integración compatible con los chats normales y las tareas en la nube de ChatGPT para Windows si existe una fuente de eventos pública y estable.
 - Explorar avisos automáticos de Chat y Cowork de Claude Desktop si ofrecen una fuente de eventos pública y estable.
 - Permitir prioridades y reglas de silencio para muchos proyectos simultáneos.
 - Abrir la tarea correspondiente al pulsar una tarjeta, cuando haya un enlace local verificable.

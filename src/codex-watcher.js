@@ -17,6 +17,12 @@ function stageFor(itemType) {
   }[itemType] || null;
 }
 
+function sourceFor(originator) {
+  const origin = String(originator || '').toLowerCase();
+  if (origin === 'codex_work_desktop') return 'chatgpt';
+  return origin.includes('desktop') ? 'codex' : 'codex-cli';
+}
+
 class CodexWatcher {
   constructor(onComplete, onState = () => {}, home = process.env.CODEX_HOME || path.join(os.homedir(), '.codex')) {
     this.onComplete = onComplete;
@@ -62,10 +68,9 @@ class CodexWatcher {
     if (this.sessions.has(file)) return this.sessions.get(file);
     const meta = this.metadata(file);
     const cwd = typeof meta.cwd === 'string' ? meta.cwd : '';
-    const origin = String(meta.originator || '').toLowerCase();
     const session = {
       file, cwd, project: path.basename(cwd) || 'Proyecto',
-      source: origin.includes('desktop') ? 'codex' : 'codex-cli',
+      source: sourceFor(meta.originator),
       turnId: '', stage: 'Iniciando', startedAt: 0, updatedAt: 0, running: false,
     };
     this.sessions.set(file, session);
@@ -96,6 +101,14 @@ class CodexWatcher {
         source: session.source, id: session.turnId,
         title: `${session.project} · listo`,
         body: 'La tarea terminó y está lista para revisar.',
+      });
+    } else if (payload.type === 'turn_aborted' && session.running && payload.turn_id === session.turnId) {
+      session.running = false;
+      session.updatedAt = Date.now();
+      if (notify) this.onComplete({
+        source: session.source, id: `${session.turnId}:aborted`,
+        title: `${session.project} · interrumpido`,
+        body: 'La tarea se interrumpió. Revisá la conversación.',
       });
     }
   }
@@ -153,4 +166,4 @@ class CodexWatcher {
   }
 }
 
-module.exports = { CodexWatcher, stageFor };
+module.exports = { CodexWatcher, stageFor, sourceFor };

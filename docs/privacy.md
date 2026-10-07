@@ -4,7 +4,7 @@ Wipi está pensado para funcionar en el equipo del usuario. El código de la apl
 
 | Fuente | Datos que procesa | Destino |
 | --- | --- | --- |
-| Sesiones de Codex | Lee archivos JSONL locales que pueden contener conversaciones; extrae carpeta de trabajo, fuente, identificadores, tipos de evento y tiempos. | Solo memoria local para el panel. No muestra ni envía el texto de las conversaciones. |
+| Sesiones locales de Codex Desktop, ChatGPT Work y Codex CLI | Lee archivos JSONL locales que pueden contener conversaciones; extrae carpeta de trabajo, fuente, identificadores, tipos de evento y tiempos. | Solo memoria local para el panel. No muestra ni envía el texto de las conversaciones. |
 | Hook de Codex CLI | Recibe el evento `agent-turn-complete`, que puede incluir el último mensaje del asistente. | Envía el aviso al servidor local de Wipi; el texto visible se limita a 220 caracteres. |
 | Hook de Claude Code | Recibe JSON de ciclo de vida de Claude Code; el script extrae ID de sesión/turno, carpeta, evento y nombre de herramienta. | Envía solo esos metadatos al servidor local de Wipi; descarta prompts, entradas de herramientas y respuestas. |
 | Extensión ChatGPT web | Detecta que una respuesta terminó. | Envía una frase fija al servidor local. No envía el texto del chat. |
@@ -15,6 +15,8 @@ Wipi está pensado para funcionar en el equipo del usuario. El código de la apl
 El receptor HTTP escucha solo en `127.0.0.1:47823` y exige un token aleatorio en `X-Wipi-Token`. La extensión guarda una copia del token en el almacenamiento local del navegador. No pegues el token en issues, capturas públicas o conversaciones.
 
 Wipi conserva como máximo 30 avisos en memoria. Al cerrar la aplicación se pierden. La configuración y el token sí permanecen en disco para la siguiente ejecución.
+
+Wipi no solicita permiso para leer el centro de notificaciones de Windows. Los chats normales de ChatGPT para Windows no se leen desde archivos de la aplicación ni se inspeccionan mediante accesibilidad o captura de pantalla.
 
 ## Archivos creados por el instalador del hook
 

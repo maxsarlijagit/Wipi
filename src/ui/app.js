@@ -60,9 +60,9 @@ function renderActivities(next) {
     const row = document.createElement('div'); row.className = `activity${item.quiet ? ' quiet' : ''}`;
     row.title = item.cwd || item.project;
     const top = document.createElement('div'); top.className = 'activity-top';
-    const orb = document.createElement('div'); orb.className = 'activity-orb'; orb.textContent = item.quiet ? '◌' : item.source === 'claude' ? '✦' : '⌘';
+    const orb = document.createElement('div'); orb.className = 'activity-orb'; orb.textContent = item.quiet ? '◌' : item.source === 'claude' || item.source === 'chatgpt' ? '✦' : '⌘';
     const name = document.createElement('div'); name.className = 'activity-name'; name.textContent = item.project;
-    const src = document.createElement('div'); src.className = 'activity-source'; src.textContent = item.source === 'claude' ? 'CLAUDE' : item.source === 'codex-cli' ? 'CLI' : 'CODEX';
+    const src = document.createElement('div'); src.className = 'activity-source'; src.textContent = item.source === 'claude' ? 'CLAUDE' : item.source === 'chatgpt' ? 'CHATGPT' : item.source === 'codex-cli' ? 'CLI' : 'CODEX';
     top.append(orb, name, src);
     const bottom = document.createElement('div'); bottom.className = 'activity-bottom';
     const dot = document.createElement('span'); dot.className = 'status-dot';

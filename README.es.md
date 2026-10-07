@@ -23,11 +23,11 @@ También está disponible el [tema claro Pearl](docs/images/wipi-pearl.png).
 
 ## Inicio rápido (Windows)
 
-1. [Descargá el instalador Wipi 0.3.0](releases/v0.3.0/Wipi-Setup-0.3.0.exe) y ejecutalo. Por ahora, el instalador no tiene firma de código.
+1. [Descargá el instalador Wipi 0.4.0](releases/v0.4.0/Wipi-Setup-0.4.0.exe) y ejecutalo. Por ahora, el instalador no tiene firma de código.
 2. Abrí **Wipi** desde el menú Inicio. Aparecerán la barra flotante y el icono en la bandeja.
 3. Pulsá la flecha para abrir el panel y después **Probar** para comprobar los avisos. Las tareas de Codex aparecen automáticamente cuando Codex guarda sesiones locales.
 
-El instalador está en la [carpeta versionada](releases/v0.3.0/) con su suma SHA-256. Claude Code, el puente `notify` de Codex CLI y la extensión de ChatGPT web tienen pasos opcionales de conexión más abajo.
+El instalador está en la [carpeta versionada](releases/v0.4.0/) con su suma SHA-256. Claude Code, el puente `notify` de Codex CLI y la extensión de ChatGPT web tienen pasos opcionales de conexión más abajo.
 
 ## Qué podés hacer
 
@@ -43,11 +43,12 @@ El instalador está en la [carpeta versionada](releases/v0.3.0/) con su suma SHA
 | Fuente | Tareas en curso | Aviso al terminar | Configuración |
 | --- | --- | --- | --- |
 | Codex Desktop | Sí, desde sesiones locales | Sí | Automática si Codex guarda sesiones en el equipo |
+| ChatGPT para Windows, tareas Work locales | Sí, desde sesiones locales de Codex | Sí | Automática si la app guarda sesiones locales |
 | Codex CLI | Sí, cuando escribe sesiones locales | Sí | El puente `notify` es opcional para incluir un resumen de la respuesta |
 | Claude Code CLI | Sí | Sí | Elegí **Conectar Claude Code** en el menú de la bandeja de Wipi |
 | Claude Desktop, pestaña Code | Sí, para sesiones locales | Sí | Los mismos hooks de Claude Code; iniciá una sesión local nueva tras conectar |
 | ChatGPT web | Aún no | Sí, con la extensión incluida | Cargar la extensión en Chrome o Edge |
-| ChatGPT Desktop | Aún no | Aún no | No disponible |
+| ChatGPT para Windows, chats normales | Aún no | Aún no | Usá las notificaciones de la propia app |
 
 Wipi lee los eventos locales de Codex cada 2,5 segundos. Una sesión sin cambios durante diez minutos aparece como **Sin actividad reciente** y deja de contar como tarea activa. El último paso mostrado es el último evento registrado, no una lectura exacta de lo que Codex está haciendo en ese instante.
 
@@ -70,7 +71,7 @@ La primera ejecución puede descargar el runtime de Electron. Wipi aparecerá co
 npm.cmd run dist
 ```
 
-El comando crea un instalador y una versión portable en `dist/`. Esa carpeta se excluye de Git. El instalador 0.3.0 también está en `releases/v0.3.0/`, seguido con Git LFS porque supera el límite habitual de tamaño de GitHub. Adjuntalo a una **GitHub Release** para facilitar la descarga desde el navegador. Las compilaciones actuales no tienen firma de código.
+El comando crea un instalador y una versión portable en `dist/`. Esa carpeta se excluye de Git. El instalador 0.4.0 también está en `releases/v0.4.0/`, seguido con Git LFS porque supera el límite habitual de tamaño de GitHub. Adjuntalo a una **GitHub Release** para facilitar la descarga desde el navegador. Las compilaciones actuales no tienen firma de código.
 
 ### Conectar Claude Code CLI y Claude Desktop Code
 
@@ -98,6 +99,12 @@ El script modifica el `config.toml` del usuario, crea `config.toml.wipi-backup` 
 
 La extensión avisa cuando termina una respuesta en `chatgpt.com`. No envía el texto de la conversación. Su detección depende de la interfaz de ChatGPT web y puede necesitar ajustes si esa interfaz cambia.
 
+### ChatGPT para Windows y Codex Desktop
+
+Wipi sigue automáticamente las sesiones locales de Codex que guardan ambas aplicaciones. Las sesiones identificadas como `codex_work_desktop` aparecen como **CHATGPT**; las de `Codex Desktop`, como **CODEX**. Iniciá una tarea local con Wipi abierto para ver el proyecto, el último paso registrado y el aviso de finalización o interrupción. No hace falta conectar una cuenta.
+
+Los chats normales de ChatGPT, las tareas en la nube y las notificaciones de Windows de la app no se exponen a Wipi mediante estos archivos de sesión. Para esos chats, activá las [notificaciones propias de la app](https://learn.chatgpt.com/docs/notifications). Wipi no lee el centro de notificaciones ni el texto de los chats.
+
 ## Documentación
 
 - [Guía de instalación y uso](docs/installation.md)
@@ -110,7 +117,7 @@ La extensión avisa cuando termina una respuesta en `chatgpt.com`. No envía el 
 ## Límites actuales
 
 - No mide porcentajes de progreso. Procesa los archivos de sesión de Codex localmente para extraer estados, pero no muestra ni envía el contenido de las conversaciones.
-- No detecta tareas en curso de ChatGPT web ni avisos de la app ChatGPT Desktop.
+- No detecta tareas en curso de ChatGPT web, chats normales de ChatGPT para Windows ni las notificaciones de Windows de esa app.
 - No sigue Chat ni Cowork de Claude Desktop; los hooks de Claude Code cubren Code local y CLI.
 - La integración de Codex Desktop usa el formato local de sus sesiones; podría cambiar con una actualización de Codex.
 - El historial de avisos vive en memoria y se vacía cuando se cierra Wipi.
