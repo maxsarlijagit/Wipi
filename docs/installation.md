@@ -6,7 +6,7 @@
 - Para ejecutar desde el código o compilar: Node.js 24 y npm 11, las versiones usadas durante el desarrollo.
 - Codex instalado localmente para ver sus sesiones. No hace falta una clave de API de OpenAI.
 
-Wipi también puede ejecutarse sin Codex: la barra, los temas y la notificación de prueba funcionan igual.
+Wipi también puede ejecutarse sin Codex ni Claude Code: la barra, los temas y la notificación de prueba funcionan igual.
 
 ## Opción 1: ejecutable
 
@@ -54,6 +54,17 @@ node scripts\install-codex-hook.js
 El script conserva el `notify` previo, si existe, y guarda una copia del archivo de configuración del usuario en `config.toml.wipi-backup`. Reiniciá Codex CLI después. El hook guarda una **ruta absoluta** al script de este repositorio; si movés la carpeta, volvé a configurarlo con cuidado.
 
 Para retirar Wipi del hook, editá la línea `notify` de `%USERPROFILE%\.codex\config.toml`. Si tenías un comando anterior, está guardado en `%APPDATA%\wipi\previous-notify.json`. El respaldo completo `config.toml.wipi-backup` sirve como referencia, pero no reemplaces el archivo actual con él si hiciste otros cambios desde la instalación.
+
+## Claude Code CLI y Claude Desktop Code
+
+1. Abrí Wipi y hacé clic derecho en el icono de la bandeja.
+2. Elegí **Conectar Claude Code**.
+3. Reiniciá Claude Code CLI o iniciá una sesión nueva con entorno **Local** en la pestaña **Code** de Claude Desktop.
+4. Enviá una tarea de prueba. La tarjeta debería aparecer en **En curso** y convertirse en un aviso al terminar.
+
+Wipi agrega hooks de usuario en `%USERPROFILE%\.claude\settings.json`. Conserva otros ajustes y hooks; antes del primer cambio crea `settings.json.wipi-backup`. Elegir **Conectar Claude Code** de nuevo actualiza el enlace a la instalación actual de Wipi sin duplicar los hooks. Si movés o reinstalás Wipi, volvé a conectar. Para quitar la integración, eliminá únicamente las entradas que ejecutan `wipi-claude-hook.ps1` de ese archivo, conservando los demás hooks.
+
+Esta integración cubre Claude Code CLI y la pestaña Code de Claude Desktop en sesiones locales. Chat, Cowork y sesiones Code remotas no envían eventos a este receptor local. El hook no transmite el texto de prompts o respuestas a Wipi.
 
 ## ChatGPT web: extensión opcional
 

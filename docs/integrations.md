@@ -7,6 +7,7 @@ flowchart LR
     A[Sesiones locales de Codex] --> B[Wipi]
     C[Codex CLI notify opcional] --> D[Puente local 127.0.0.1]
     E[Extensión ChatGPT web] --> D
+    G[Hooks locales de Claude Code CLI y Desktop Code] --> D
     D --> B
     B --> F[Barra y panel de actividad]
 ```
@@ -34,6 +35,20 @@ El ajuste de usuario `notify` ejecuta `scripts/codex-notify.js` con un argumento
 
 Wipi evita duplicar un aviso cuando el evento de sesión y el hook incluyen el mismo identificador de turno.
 
+## Claude Code CLI y Claude Desktop Code
+
+Los [hooks oficiales de Claude Code](https://code.claude.com/docs/en/hooks) se aplican a la CLI y a la pestaña **Code** de [Claude Desktop](https://code.claude.com/docs/en/desktop) en sesiones locales. Al elegir **Conectar Claude Code** en la bandeja de Wipi, se agregan hooks a `%USERPROFILE%\.claude\settings.json` para estos eventos:
+
+| Hook | Estado en Wipi |
+| --- | --- |
+| `UserPromptSubmit` | Inicia una tarjeta de proyecto. |
+| `PreToolUse` | Actualiza el último paso: comandos, lectura, edición, búsqueda o herramientas. |
+| `Stop` | Retira la tarjeta y avisa que la respuesta está lista. |
+| `StopFailure` | Retira la tarjeta y avisa que hubo una interrupción. |
+| `SessionEnd` | Retira una sesión cerrada sin aviso de finalización. |
+
+El hook de PowerShell envía solo identificador de sesión y turno, carpeta de trabajo, nombre del evento y nombre de la herramienta. No reenvía prompts, entradas de herramientas ni respuestas. Las tarjetas sin eventos recientes pasan a **Sin actividad reciente** después de diez minutos y se retiran después de una hora. Los hooks no cubren Chat ni Cowork de Claude Desktop, ni las sesiones remotas de Code; Wipi tampoco distingue visualmente si una sesión local de Claude Code viene de CLI o Desktop.
+
 ## ChatGPT web
 
 La extensión incluida observa `chatgpt.com`. Cuando detecta que terminó una nueva respuesta del asistente, envía a Wipi un aviso fijo. **No envía el texto del chat.** Necesita cargarse manualmente en Chrome o Edge y guardar el token local de Wipi.
@@ -42,4 +57,4 @@ La detección depende de elementos de la página y puede dejar de funcionar si C
 
 ## Avisos externos
 
-Wipi expone `POST http://127.0.0.1:47823/notify` solo en loopback. Requiere el encabezado `X-Wipi-Token` con el valor local de `%APPDATA%\wipi\settings.json`. Acepta un JSON con `source` (`codex`, `codex-cli`, `chatgpt` o `test`), `title` y `body`; limita la longitud del texto. Esta interfaz es local y no se debe publicar en una red.
+Wipi expone `POST http://127.0.0.1:47823/notify` solo en loopback. Requiere el encabezado `X-Wipi-Token` con el valor local de `%APPDATA%\wipi\settings.json`. Acepta un JSON con `source` (`codex`, `codex-cli`, `claude`, `chatgpt` o `test`), `title` y `body`; limita la longitud del texto. El hook de Claude usa `POST /claude-hook` con el mismo token y solo los metadatos indicados arriba. Esta interfaz es local y no se debe publicar en una red.

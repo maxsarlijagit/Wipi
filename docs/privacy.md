@@ -6,6 +6,7 @@ Wipi está pensado para funcionar en el equipo del usuario. El código de la apl
 | --- | --- | --- |
 | Sesiones de Codex | Lee archivos JSONL locales que pueden contener conversaciones; extrae carpeta de trabajo, fuente, identificadores, tipos de evento y tiempos. | Solo memoria local para el panel. No muestra ni envía el texto de las conversaciones. |
 | Hook de Codex CLI | Recibe el evento `agent-turn-complete`, que puede incluir el último mensaje del asistente. | Envía el aviso al servidor local de Wipi; el texto visible se limita a 220 caracteres. |
+| Hook de Claude Code | Recibe JSON de ciclo de vida de Claude Code; el script extrae ID de sesión/turno, carpeta, evento y nombre de herramienta. | Envía solo esos metadatos al servidor local de Wipi; descarta prompts, entradas de herramientas y respuestas. |
 | Extensión ChatGPT web | Detecta que una respuesta terminó. | Envía una frase fija al servidor local. No envía el texto del chat. |
 | Ajustes | Tema, posición de la ventana, opción de inicio con Windows y token aleatorio. | `%APPDATA%\wipi\settings.json`. |
 
@@ -18,6 +19,8 @@ Wipi conserva como máximo 30 avisos en memoria. Al cerrar la aplicación se pie
 ## Archivos creados por el instalador del hook
 
 `scripts/install-codex-hook.js` cambia la línea `notify` del `config.toml` de Codex a nivel usuario. Guarda una copia anterior en `config.toml.wipi-backup`. Si existía un comando `notify`, conserva sus argumentos en `%APPDATA%\wipi\previous-notify.json` para ejecutarlo también.
+
+**Conectar Claude Code** agrega hooks a `%USERPROFILE%\.claude\settings.json` y crea `settings.json.wipi-backup` la primera vez. El hook de PowerShell lee el token de Wipi en cada evento; no lo copia al archivo de ajustes de Claude.
 
 No publiques esos archivos: pueden contener rutas personales y argumentos de comandos. Para deshacer el cambio, seguí [la guía de instalación](installation.md#codex-cli-puente-notify-opcional).
 

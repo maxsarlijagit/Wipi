@@ -5,12 +5,16 @@ const crypto = require('node:crypto');
 const http = require('node:http');
 const { normalizeEvent, fromCodexNotify } = require('./events');
 const { CodexWatcher } = require('./codex-watcher');
+const { ClaudeActivityTracker } = require('./claude-activity');
+const { installClaudeHooks, defaultClaudeSettingsPath } = require('./claude-integration');
 
 const PORT = 47823;
 const THEMES = ['graphite', 'pearl', 'violet', 'mint', 'sunset'];
-let win, tray, server, watcher, settings, token;
+let win, tray, server, watcher, claudeTracker, activityTimer, settings, token;
 let history = [];
 let activities = [];
+let codexActivities = [];
+let lastActivities = '';
 const seenIds = new Set();
 let dismissTimer;
 let quitting = false;
@@ -49,9 +53,27 @@ function placeWindow() {
   win.setBounds({ x, y, ...size });
   setTimeout(() => { changingBounds = false; }, 150);
 }
-function updateActivities(snapshot) {
-  activities = snapshot;
+function refreshActivities() {
+  activities = [...codexActivities, ...(claudeTracker?.snapshot() || [])]
+    .sort((a, b) => b.updatedAt - a.updatedAt).slice(0, 12);
+  const serialized = JSON.stringify(activities);
+  if (serialized === lastActivities) return;
+  lastActivities = serialized;
   win?.webContents.send('activities', activities);
+}
+function updateCodexActivities(snapshot) {
+  codexActivities = snapshot;
+  refreshActivities();
+}
+function connectClaudeCode() {
+  try {
+    const script = path.join(app.isPackaged ? process.resourcesPath : path.join(__dirname, '..'), 'scripts', 'wipi-claude-hook.ps1');
+    if (!fs.existsSync(script)) throw new Error('No se encontró el hook incluido en Wipi.');
+    installClaudeHooks(defaultClaudeSettingsPath(), script);
+    publish({ source: 'test', title: 'Claude Code conectado', body: 'Reiniciá Claude Code CLI o abrí una nueva sesión local en Desktop Code.' });
+  } catch (error) {
+    publish({ source: 'test', title: 'No se pudo conectar Claude', body: error.message });
+  }
 }
 function publish(event) {
   const item = normalizeEvent(event);
@@ -101,6 +123,7 @@ function updateTray() {
     { label: 'Probar notificación', click: () => publish({source:'test', title:'Todo en su lugar', body:'Wipi está listo para acompañarte.'}) },
     { type: 'separator' },
     { label: 'Tema', submenu: THEMES.map(theme => ({ label: theme[0].toUpperCase()+theme.slice(1), type: 'radio', checked: settings.theme === theme, click: () => setTheme(theme) })) },
+    { label: 'Conectar Claude Code', click: connectClaudeCode },
     { label: 'Abrir carpeta de configuración', click: () => shell.openPath(app.getPath('userData')) },
     { label: 'Iniciar con Windows', type: 'checkbox', checked: settings.startWithWindows, click: item => {
       settings.startWithWindows = item.checked; saveSettings();
@@ -126,13 +149,17 @@ function startServer() {
       res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     }
     if (req.method === 'OPTIONS') { res.writeHead(204); res.end(); return; }
-    if (req.method !== 'POST' || req.url !== '/notify') { res.writeHead(404); res.end(); return; }
+    if (req.method !== 'POST' || !['/notify', '/claude-hook'].includes(req.url)) { res.writeHead(404); res.end(); return; }
     if (req.headers['x-wipi-token'] !== token) { res.writeHead(401); res.end(); return; }
     let body = '';
     req.on('data', chunk => { body += chunk; if (body.length > 16384) req.destroy(); });
     req.on('end', () => {
       let data;
       try { data = JSON.parse(body); } catch { res.writeHead(400); res.end(); return; }
+      if (req.url === '/claude-hook') {
+        if (!claudeTracker.consume(data)) { res.writeHead(400); res.end(); return; }
+        res.writeHead(204); res.end(); return;
+      }
       const event = data.type === 'agent-turn-complete' ? fromCodexNotify(data) : normalizeEvent(data);
       if (!event) { res.writeHead(400); res.end(); return; }
       publish(event); res.writeHead(204); res.end();
@@ -148,8 +175,10 @@ else {
   app.whenReady().then(() => {
     loadSettings(); createWindow();
     tray = new Tray(trayIcon()); tray.setToolTip('Wipi'); tray.on('double-click', () => win.showInactive()); updateTray();
+    claudeTracker = new ClaudeActivityTracker(publish, refreshActivities);
     startServer();
-    watcher = new CodexWatcher(publish, updateActivities); watcher.start();
+    watcher = new CodexWatcher(publish, updateCodexActivities); watcher.start();
+    activityTimer = setInterval(refreshActivities, 2500);
     screen.on('display-metrics-changed', placeWindow);
   });
 }
@@ -158,4 +187,4 @@ ipcMain.on('theme', (_, theme) => setTheme(theme));
 ipcMain.on('expand', (_, value) => { expanded = Boolean(value); placeWindow(); });
 ipcMain.on('test', () => publish({ source:'test', title:'Una pausa agradable', body:'Tu espacio de trabajo está al día.' }));
 ipcMain.on('hide', () => win.hide());
-app.on('before-quit', () => { quitting = true; watcher?.stop(); server?.close(); });
+app.on('before-quit', () => { quitting = true; watcher?.stop(); clearInterval(activityTimer); server?.close(); });

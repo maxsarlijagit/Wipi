@@ -1,6 +1,6 @@
 {
   "name": "wipi",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A calm notification bar for Windows",
   "main": "src/main.js",
   "author": "Wipi",
@@ -20,7 +20,7 @@
     "directories": { "output": "dist" },
     "files": ["src/**/*", "package.json"],
     "extraResources": [
-      { "from": "scripts", "to": "scripts", "filter": ["*.js"] },
+      { "from": "scripts", "to": "scripts", "filter": ["*.js", "*.ps1"] },
       { "from": "chatgpt-extension", "to": "chatgpt-extension" }
     ],
     "win": { "target": ["nsis", "portable"], "icon": "assets/wipi.ico" },

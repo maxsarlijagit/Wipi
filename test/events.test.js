@@ -17,3 +17,8 @@ test('notification text is bounded and whitespace is normalized', () => {
   assert.equal(result.body, 'hola mundo');
   assert.ok(normalizeEvent({source:'test', body:'x'.repeat(999)}).body.length <= 220);
 });
+test('Claude Code notifications are accepted', () => {
+  const event = normalizeEvent({ source: 'claude', title: 'Demo · listo' });
+  assert.equal(event.source, 'claude');
+  assert.equal(event.title, 'Demo · listo');
+});

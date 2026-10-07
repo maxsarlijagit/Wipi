@@ -1,4 +1,4 @@
-const VALID_SOURCES = new Set(['codex-cli', 'codex', 'chatgpt', 'test']);
+const VALID_SOURCES = new Set(['codex-cli', 'codex', 'claude', 'chatgpt', 'test']);
 
 function cleanText(value, max = 160) {
   if (typeof value !== 'string') return '';
@@ -12,7 +12,7 @@ function normalizeEvent(input) {
   return {
     source,
     id: cleanText(input.id, 80),
-    title: cleanText(input.title, 72) || ({'codex-cli':'Codex CLI', codex:'Codex', chatgpt:'ChatGPT', test:'Wipi'}[source]),
+    title: cleanText(input.title, 72) || ({'codex-cli':'Codex CLI', codex:'Codex', claude:'Claude Code', chatgpt:'ChatGPT', test:'Wipi'}[source]),
     body: cleanText(input.body, 220) || 'Listo para revisar',
     time: Date.now(),
   };

@@ -5,7 +5,7 @@ Wipi es una barra de actividad local para Windows. Este directorio contiene las 
 | Documento | Contenido |
 | --- | --- |
 | [Instalación y uso](installation.md) | Inicio, ejecutables, bandeja, temas y solución de problemas |
-| [Integraciones y estados](integrations.md) | Codex Desktop, Codex CLI, ChatGPT web y significado de los estados |
+| [Integraciones y estados](integrations.md) | Codex, Claude Code CLI y Desktop Code, ChatGPT web y significado de los estados |
 | [Privacidad](privacy.md) | Qué datos procesa Wipi y dónde quedan |
 | [Desarrollo](development.md) | Estructura del código, pruebas, capturas y preparación de una release |
 | [Roadmap](roadmap.md) | Mejoras propuestas; no representan funciones ya disponibles |

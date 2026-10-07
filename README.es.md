@@ -19,11 +19,11 @@ También está disponible el [tema claro Pearl](docs/images/wipi-pearl.png).
 
 ## Inicio rápido (Windows)
 
-1. [Descargá el instalador Wipi 0.2.0](releases/v0.2.0/Wipi-Setup-0.2.0.exe) y ejecutalo. Por ahora, el instalador no tiene firma de código.
+1. [Descargá el instalador Wipi 0.3.0](releases/v0.3.0/Wipi-Setup-0.3.0.exe) y ejecutalo. Por ahora, el instalador no tiene firma de código.
 2. Abrí **Wipi** desde el menú Inicio. Aparecerán la barra flotante y el icono en la bandeja.
 3. Pulsá la flecha para abrir el panel y después **Probar** para comprobar los avisos. Las tareas de Codex aparecen automáticamente cuando Codex guarda sesiones locales.
 
-El instalador está en la [carpeta versionada](releases/v0.2.0/) con su suma SHA-256. El puente `notify` de Codex CLI y la extensión de ChatGPT web son opcionales; sus instrucciones están más abajo.
+El instalador está en la [carpeta versionada](releases/v0.3.0/) con su suma SHA-256. Claude Code, el puente `notify` de Codex CLI y la extensión de ChatGPT web tienen pasos opcionales de conexión más abajo.
 
 ## Qué podés hacer
 
@@ -32,6 +32,7 @@ El instalador está en la [carpeta versionada](releases/v0.2.0/) con su suma SHA
 - Recibir un aviso breve cuando termina una tarea y revisar los últimos 30 avisos mientras Wipi está abierto.
 - Arrastrar la barra a cualquier parte del escritorio. Wipi recuerda la posición; desde el icono de la bandeja podés devolverla arriba al centro.
 - Cambiar entre **Graphite**, **Pearl**, **Violet**, **Mint** y **Sunset**. El menú de la bandeja también permite probar un aviso, activar el inicio con Windows y salir.
+- Seguir tareas locales de Claude Code tanto en CLI como en la pestaña **Code** de Claude Desktop después de conectar sus hooks.
 
 ## Integraciones disponibles
 
@@ -39,6 +40,8 @@ El instalador está en la [carpeta versionada](releases/v0.2.0/) con su suma SHA
 | --- | --- | --- | --- |
 | Codex Desktop | Sí, desde sesiones locales | Sí | Automática si Codex guarda sesiones en el equipo |
 | Codex CLI | Sí, cuando escribe sesiones locales | Sí | El puente `notify` es opcional para incluir un resumen de la respuesta |
+| Claude Code CLI | Sí | Sí | Elegí **Conectar Claude Code** en el menú de la bandeja de Wipi |
+| Claude Desktop, pestaña Code | Sí, para sesiones locales | Sí | Los mismos hooks de Claude Code; iniciá una sesión local nueva tras conectar |
 | ChatGPT web | Aún no | Sí, con la extensión incluida | Cargar la extensión en Chrome o Edge |
 | ChatGPT Desktop | Aún no | Aún no | No disponible |
 
@@ -63,7 +66,13 @@ La primera ejecución puede descargar el runtime de Electron. Wipi aparecerá co
 npm.cmd run dist
 ```
 
-El comando crea un instalador y una versión portable en `dist/`. Esa carpeta se excluye de Git. El instalador 0.2.0 también está en `releases/v0.2.0/`, seguido con Git LFS porque supera el límite habitual de tamaño de GitHub. Adjuntalo a una **GitHub Release** para facilitar la descarga desde el navegador. Las compilaciones actuales no tienen firma de código.
+El comando crea un instalador y una versión portable en `dist/`. Esa carpeta se excluye de Git. El instalador 0.3.0 también está en `releases/v0.3.0/`, seguido con Git LFS porque supera el límite habitual de tamaño de GitHub. Adjuntalo a una **GitHub Release** para facilitar la descarga desde el navegador. Las compilaciones actuales no tienen firma de código.
+
+### Conectar Claude Code CLI y Claude Desktop Code
+
+En el menú de la bandeja de Wipi elegí **Conectar Claude Code**. Esto agrega hooks al archivo de usuario `%USERPROFILE%\.claude\settings.json` y guarda `settings.json.wipi-backup` antes del primer cambio. Conserva los hooks que ya existían. Reiniciá Claude Code CLI o abrí una sesión **local** nueva en la pestaña **Code** de Claude Desktop.
+
+Wipi muestra el proyecto y el último tipo de actividad mientras Claude trabaja, y avisa cuando termina o falla. El hook envía solo el ID de sesión, la ruta del proyecto, el nombre del evento y el de la herramienta a Wipi por `127.0.0.1`; no envía prompts, entradas de herramientas ni respuestas. Los chats y Cowork de Claude Desktop, y las sesiones Code remotas, no están cubiertos por estos hooks locales. [Referencia de hooks de Claude Code](https://code.claude.com/docs/en/hooks) · [Configuración compartida con Desktop](https://code.claude.com/docs/en/desktop).
 
 ### Conectar Codex CLI con `notify` (opcional)
 
@@ -98,6 +107,7 @@ La extensión avisa cuando termina una respuesta en `chatgpt.com`. No envía el 
 
 - No mide porcentajes de progreso. Procesa los archivos de sesión de Codex localmente para extraer estados, pero no muestra ni envía el contenido de las conversaciones.
 - No detecta tareas en curso de ChatGPT web ni avisos de la app ChatGPT Desktop.
+- No sigue Chat ni Cowork de Claude Desktop; los hooks de Claude Code cubren Code local y CLI.
 - La integración de Codex Desktop usa el formato local de sus sesiones; podría cambiar con una actualización de Codex.
 - El historial de avisos vive en memoria y se vacía cuando se cierra Wipi.
 

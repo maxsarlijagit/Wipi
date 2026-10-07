@@ -54,15 +54,15 @@ function renderActivities(next) {
     const icon = document.createElement('div'); icon.className = 'empty-cup'; icon.textContent = '☕';
     const copy = document.createElement('div');
     const strong = document.createElement('strong'); strong.textContent = 'Un momento de calma';
-    const detail = document.createElement('span'); detail.textContent = 'Las tareas de Codex aparecerán aquí.';
+    const detail = document.createElement('span'); detail.textContent = 'Las tareas de Codex y Claude Code aparecerán aquí.';
     copy.append(strong, detail); empty.append(icon, copy); activityList.append(empty);
   } else for (const item of next) {
     const row = document.createElement('div'); row.className = `activity${item.quiet ? ' quiet' : ''}`;
     row.title = item.cwd || item.project;
     const top = document.createElement('div'); top.className = 'activity-top';
-    const orb = document.createElement('div'); orb.className = 'activity-orb'; orb.textContent = item.quiet ? '◌' : '⌘';
+    const orb = document.createElement('div'); orb.className = 'activity-orb'; orb.textContent = item.quiet ? '◌' : item.source === 'claude' ? '✦' : '⌘';
     const name = document.createElement('div'); name.className = 'activity-name'; name.textContent = item.project;
-    const src = document.createElement('div'); src.className = 'activity-source'; src.textContent = item.source === 'codex-cli' ? 'CLI' : 'CODEX';
+    const src = document.createElement('div'); src.className = 'activity-source'; src.textContent = item.source === 'claude' ? 'CLAUDE' : item.source === 'codex-cli' ? 'CLI' : 'CODEX';
     top.append(orb, name, src);
     const bottom = document.createElement('div'); bottom.className = 'activity-bottom';
     const dot = document.createElement('span'); dot.className = 'status-dot';
@@ -106,7 +106,7 @@ for (const [theme, color] of Object.entries(themes)) {
 }
 window.wipi.on('event', item => {
   showingNotification = true;
-  source.textContent = ({'codex-cli':'CODEX CLI',codex:'CODEX',chatgpt:'CHATGPT',test:'WIPI'}[item.source] || 'WIPI') + ' · LISTO';
+  source.textContent = ({'codex-cli':'CODEX CLI',codex:'CODEX',claude:'CLAUDE CODE',chatgpt:'CHATGPT',test:'WIPI'}[item.source] || 'WIPI') + (item.title.includes('interrumpido') ? ' · AVISO' : ' · LISTO');
   title.textContent = item.title; subtitle.textContent = item.body;
   clearTimeout(notificationTimer);
   notificationTimer = setTimeout(() => { showingNotification = false; renderSummary(); }, 6800);
