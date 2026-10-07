@@ -1,98 +1,102 @@
 # Wipi ☕
 
-**Un pequeño focus desk para Windows.** Seguí varias tareas de Codex sin cambiar de ventana y recibí avisos suaves cuando terminan. La barra tiene una taza con vapor animado, cinco temas y una posición que podés elegir arrastrándola.
+**Language:** English · [Español](README.es.md)
 
-<img src="docs/images/wipi-bar.png" alt="Barra Wipi con dos proyectos de ejemplo en curso" width="438">
+**A small focus desk for Windows.** Keep track of multiple Codex tasks without switching windows, and get gentle alerts when they finish. Wipi has an animated coffee cup, five color themes, and a floating bar you can drag anywhere on your desktop.
+
+<img src="docs/images/wipi-bar.png" alt="Wipi bar showing two sample projects in progress" width="438">
 
 <details>
-<summary>Ver el panel de actividad</summary>
+<summary>See the activity panel</summary>
 
-<img src="docs/images/wipi-panel.png" alt="Panel Wipi con proyectos en curso y avisos recientes de ejemplo" width="460">
+<img src="docs/images/wipi-panel.png" alt="Wipi panel showing sample active projects and recent alerts" width="460">
 
-También está disponible el [tema claro Pearl](docs/images/wipi-pearl.png).
+There is also a [light Pearl theme](docs/images/wipi-pearl.png).
 
 </details>
 
-> Las imágenes usan nombres ficticios. No contienen conversaciones ni proyectos reales.
+> Screenshots use fictional project names. They contain no real conversations or projects.
 
-## Qué podés hacer
+## What Wipi does
 
-- Ver cuántas tareas de Codex siguen en curso y a qué proyecto pertenecen.
-- Consultar el último paso registrado: análisis, comandos, herramientas, edición o respuesta. Es una señal de actividad, no un porcentaje de avance.
-- Recibir un aviso breve cuando termina una tarea y revisar los últimos 30 avisos mientras Wipi está abierto.
-- Arrastrar la barra a cualquier parte del escritorio. Wipi recuerda la posición; desde el icono de la bandeja podés devolverla arriba al centro.
-- Cambiar entre **Graphite**, **Pearl**, **Violet**, **Mint** y **Sunset**. El menú de la bandeja también permite probar un aviso, activar el inicio con Windows y salir.
+- Shows how many Codex tasks are running and which projects they belong to.
+- Shows the last recorded step, such as analysis, commands, tools, file edits, or a response. This is an activity signal, not a progress percentage.
+- Displays a brief alert when a task finishes and keeps the latest 30 alerts while Wipi is open.
+- Lets you drag the bar anywhere on your desktop. Wipi remembers its position; the tray menu can return it to the top center.
+- Offers **Graphite**, **Pearl**, **Violet**, **Mint**, and **Sunset** themes. The tray menu also lets you test an alert, start Wipi with Windows, and quit.
 
-## Integraciones disponibles
+## Available integrations
 
-| Fuente | Tareas en curso | Aviso al terminar | Configuración |
+| Source | Active tasks | Completion alerts | Setup |
 | --- | --- | --- | --- |
-| Codex Desktop | Sí, desde sesiones locales | Sí | Automática si Codex guarda sesiones en el equipo |
-| Codex CLI | Sí, cuando escribe sesiones locales | Sí | El puente `notify` es opcional para incluir un resumen de la respuesta |
-| ChatGPT web | Aún no | Sí, con la extensión incluida | Cargar la extensión en Chrome o Edge |
-| ChatGPT Desktop | Aún no | Aún no | No disponible |
+| Codex Desktop | Yes, from local sessions | Yes | Automatic when Codex saves local sessions |
+| Codex CLI | Yes, when it writes local sessions | Yes | The optional `notify` bridge adds a short response summary |
+| ChatGPT web | Not yet | Yes, with the included extension | Load the extension in Chrome or Edge |
+| ChatGPT Desktop | Not yet | Not yet | Unavailable |
 
-Wipi lee los eventos locales de Codex cada 2,5 segundos. Una sesión sin cambios durante diez minutos aparece como **Sin actividad reciente** y deja de contar como tarea activa. El último paso mostrado es el último evento registrado, no una lectura exacta de lo que Codex está haciendo en ese instante.
+Wipi checks local Codex events every 2.5 seconds. A session with no new activity for ten minutes is marked **No recent activity** and no longer counts as active. The displayed step is the last recorded event, not a precise reading of what Codex is doing at that moment.
 
-## Empezar
+## Get started
 
-### Usar desde el código
+### Run from source
 
-Probado en Windows con Node.js 24 y npm 11. Cloná o descargá el repositorio y abrí PowerShell en su carpeta:
+Tested on Windows with Node.js 24 and npm 11. Clone or download the repository, then open PowerShell in its root folder:
 
 ```powershell
 npm.cmd ci
 npm.cmd start
 ```
 
-La primera ejecución puede descargar el runtime de Electron. Wipi aparecerá como una barra flotante y un icono en la bandeja del sistema.
+The first run may download the Electron runtime. Wipi will appear as a floating bar and a system tray icon.
 
-### Crear los ejecutables
+### Build Windows executables
 
 ```powershell
 npm.cmd run dist
 ```
 
-El comando crea un instalador y una versión portable en `dist/`. Esa carpeta se excluye de Git; para distribuir los ejecutables, subilos como archivos de una **GitHub Release**. Las compilaciones actuales no tienen firma de código.
+This creates an installer and a portable executable in `dist/`. Git ignores that folder; upload the executables as assets of a **GitHub Release** to distribute them. Current builds are not code signed.
 
-### Conectar Codex CLI con `notify` (opcional)
+### Connect Codex CLI through `notify` (optional)
 
-Con Wipi abierto, desde la raíz del repositorio:
+With Wipi open, run this from the repository root:
 
 ```powershell
 node scripts\install-codex-hook.js
 ```
 
-El script modifica el `config.toml` del usuario, crea `config.toml.wipi-backup` y conserva cualquier comando `notify` anterior. Reiniciá Codex CLI para que tome la configuración. Mantené el repositorio en la misma ruta: el hook guarda la ruta absoluta de `scripts/codex-notify.js`.
+The script updates your user-level `config.toml`, creates `config.toml.wipi-backup`, and preserves any previous `notify` command. Restart Codex CLI to load the change. Keep the repository at the same path: the hook stores the absolute path to `scripts/codex-notify.js`.
 
-### Conectar ChatGPT web (opcional)
+### Connect ChatGPT web (optional)
 
-1. En Chrome abrí `chrome://extensions`; en Edge, `edge://extensions`.
-2. Activá **Modo de desarrollador** y elegí **Cargar descomprimida**.
-3. Seleccioná la carpeta `chatgpt-extension/` de este repositorio.
-4. En la bandeja de Windows, abrí el menú de Wipi y elegí **Abrir carpeta de configuración**.
-5. Copiá el valor `token` de `settings.json` en la extensión. Pulsá **Guardar** y **Probar**.
+1. Open `chrome://extensions` in Chrome or `edge://extensions` in Edge.
+2. Enable **Developer mode** and choose **Load unpacked**.
+3. Select this repository's `chatgpt-extension/` folder.
+4. Open Wipi's system tray menu and choose **Open settings folder**.
+5. Copy the `token` value from `settings.json` into the extension. Click **Save**, then **Test**.
 
-La extensión avisa cuando termina una respuesta en `chatgpt.com`. No envía el texto de la conversación. Su detección depende de la interfaz de ChatGPT web y puede necesitar ajustes si esa interfaz cambia.
+The extension alerts Wipi when a response finishes on `chatgpt.com`. It does not send the conversation text. Detection depends on ChatGPT's web interface and may need updates when that interface changes.
 
-## Documentación
+## Documentation
 
-- [Guía de instalación y uso](docs/installation.md)
-- [Integraciones y estados](docs/integrations.md)
-- [Privacidad y seguridad local](docs/privacy.md)
-- [Desarrollo y capturas](docs/development.md)
-- [Ideas para próximas versiones](docs/roadmap.md)
-- [Índice de documentación](docs/README.md)
+The detailed guides below are currently in Spanish:
 
-## Límites actuales
+- [Installation and use](docs/installation.md)
+- [Integrations and activity states](docs/integrations.md)
+- [Privacy and local security](docs/privacy.md)
+- [Development and screenshots](docs/development.md)
+- [Ideas for future versions](docs/roadmap.md)
+- [Documentation index](docs/README.md)
 
-- No mide porcentajes de progreso ni lee el contenido de tareas de Codex Desktop.
-- No detecta tareas en curso de ChatGPT web ni avisos de la app ChatGPT Desktop.
-- La integración de Codex Desktop usa el formato local de sus sesiones; podría cambiar con una actualización de Codex.
-- El historial de avisos vive en memoria y se vacía cuando se cierra Wipi.
+## Current limitations
 
-Si encontrás un fallo, adjuntá la versión de Windows y Wipi, la fuente del aviso y los pasos para reproducirlo. **No adjuntes** `settings.json`, tokens ni conversaciones completas.
+- Wipi does not measure progress percentages. It processes Codex session files locally to extract status, but does not display or send conversation content.
+- It does not track in-progress ChatGPT web responses or notifications from the ChatGPT Desktop app.
+- The Codex Desktop integration depends on its local session format, which may change in a Codex update.
+- Alert history stays in memory and is cleared when Wipi quits.
 
-## Licencia
+For bug reports, include your Windows and Wipi versions, the alert source, and steps to reproduce the issue. **Do not attach** `settings.json`, tokens, or complete conversations.
 
-[MIT](LICENSE). Wipi es un proyecto independiente y no está afiliado a OpenAI.
+## License
+
+[MIT](LICENSE). Wipi is an independent project and is not affiliated with OpenAI.
