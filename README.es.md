@@ -17,6 +17,14 @@ También está disponible el [tema claro Pearl](docs/images/wipi-pearl.png).
 
 > Las imágenes usan nombres ficticios. No contienen conversaciones ni proyectos reales.
 
+## Inicio rápido (Windows)
+
+1. [Descargá el instalador Wipi 0.2.0](releases/v0.2.0/Wipi-Setup-0.2.0.exe) y ejecutalo. Por ahora, el instalador no tiene firma de código.
+2. Abrí **Wipi** desde el menú Inicio. Aparecerán la barra flotante y el icono en la bandeja.
+3. Pulsá la flecha para abrir el panel y después **Probar** para comprobar los avisos. Las tareas de Codex aparecen automáticamente cuando Codex guarda sesiones locales.
+
+El instalador está en la [carpeta versionada](releases/v0.2.0/) con su suma SHA-256. El puente `notify` de Codex CLI y la extensión de ChatGPT web son opcionales; sus instrucciones están más abajo.
+
 ## Qué podés hacer
 
 - Ver cuántas tareas de Codex siguen en curso y a qué proyecto pertenecen.
@@ -55,7 +63,7 @@ La primera ejecución puede descargar el runtime de Electron. Wipi aparecerá co
 npm.cmd run dist
 ```
 
-El comando crea un instalador y una versión portable en `dist/`. Esa carpeta se excluye de Git; para distribuir los ejecutables, subilos como archivos de una **GitHub Release**. Las compilaciones actuales no tienen firma de código.
+El comando crea un instalador y una versión portable en `dist/`. Esa carpeta se excluye de Git. El instalador 0.2.0 también está en `releases/v0.2.0/`, seguido con Git LFS porque supera el límite habitual de tamaño de GitHub. Adjuntalo a una **GitHub Release** para facilitar la descarga desde el navegador. Las compilaciones actuales no tienen firma de código.
 
 ### Conectar Codex CLI con `notify` (opcional)
 

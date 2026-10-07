@@ -17,6 +17,14 @@ There is also a [light Pearl theme](docs/images/wipi-pearl.png).
 
 > Screenshots use fictional project names. They contain no real conversations or projects.
 
+## Quick start (Windows)
+
+1. [Download the Wipi 0.2.0 installer](releases/v0.2.0/Wipi-Setup-0.2.0.exe) and run it. The installer is currently unsigned.
+2. Open **Wipi** from the Start menu. The floating bar and a tray icon will appear.
+3. Click the arrow to open the activity panel, then click **Probar** (“Test”) to confirm alerts work. Codex tasks appear automatically when Codex saves local sessions.
+
+The installer is stored in the [versioned release folder](releases/v0.2.0/) with its SHA-256 checksum. The Codex CLI `notify` bridge and ChatGPT web extension are optional; setup instructions are below.
+
 ## What Wipi does
 
 - Shows how many Codex tasks are running and which projects they belong to.
@@ -55,7 +63,7 @@ The first run may download the Electron runtime. Wipi will appear as a floating 
 npm.cmd run dist
 ```
 
-This creates an installer and a portable executable in `dist/`. Git ignores that folder; upload the executables as assets of a **GitHub Release** to distribute them. Current builds are not code signed.
+This creates an installer and a portable executable in `dist/`. Git ignores that build folder. The 0.2.0 installer is also in `releases/v0.2.0/`, tracked with Git LFS because it exceeds GitHub's regular file size limit. Attach it to a **GitHub Release** for a straightforward browser download. Current builds are not code signed.
 
 ### Connect Codex CLI through `notify` (optional)
 
