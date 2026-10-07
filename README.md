@@ -22,7 +22,7 @@ There is also a [light Pearl theme](docs/images/wipi-pearl.png).
 - Shows how many Codex tasks are running and which projects they belong to.
 - Shows the last recorded step, such as analysis, commands, tools, file edits, or a response. This is an activity signal, not a progress percentage.
 - Displays a brief alert when a task finishes and keeps the latest 30 alerts while Wipi is open.
-- Lets you drag the bar anywhere on your desktop. Wipi remembers its position; the tray menu can return it to the top center.
+- Lets you drag the bar anywhere on your desktop. Wipi remembers its position; **Volver arriba al centro** in the tray menu returns it to the top center.
 - Offers **Graphite**, **Pearl**, **Violet**, **Mint**, and **Sunset** themes. The tray menu also lets you test an alert, start Wipi with Windows, and quit.
 
 ## Available integrations
@@ -34,7 +34,7 @@ There is also a [light Pearl theme](docs/images/wipi-pearl.png).
 | ChatGPT web | Not yet | Yes, with the included extension | Load the extension in Chrome or Edge |
 | ChatGPT Desktop | Not yet | Not yet | Unavailable |
 
-Wipi checks local Codex events every 2.5 seconds. A session with no new activity for ten minutes is marked **No recent activity** and no longer counts as active. The displayed step is the last recorded event, not a precise reading of what Codex is doing at that moment.
+Wipi checks local Codex events every 2.5 seconds. A session with no new activity for ten minutes is marked **Sin actividad reciente** (“No recent activity”) and no longer counts as active. The displayed step is the last recorded event, not a precise reading of what Codex is doing at that moment.
 
 ## Get started
 
@@ -72,8 +72,8 @@ The script updates your user-level `config.toml`, creates `config.toml.wipi-back
 1. Open `chrome://extensions` in Chrome or `edge://extensions` in Edge.
 2. Enable **Developer mode** and choose **Load unpacked**.
 3. Select this repository's `chatgpt-extension/` folder.
-4. Open Wipi's system tray menu and choose **Open settings folder**.
-5. Copy the `token` value from `settings.json` into the extension. Click **Save**, then **Test**.
+4. Open Wipi's system tray menu and choose **Abrir carpeta de configuración** (“Open settings folder”).
+5. Copy the `token` value from `settings.json` into the extension. Click **Guardar** (“Save”), then **Probar** (“Test”).
 
 The extension alerts Wipi when a response finishes on `chatgpt.com`. It does not send the conversation text. Detection depends on ChatGPT's web interface and may need updates when that interface changes.
 
