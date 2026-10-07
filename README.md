@@ -4,6 +4,10 @@
 
 **A small focus desk for Windows.** Keep track of multiple Codex tasks without switching windows, and get gentle alerts when they finish. Wipi has an animated coffee cup, five color themes, and a floating bar you can drag anywhere on your desktop.
 
+<p align="center">
+  <a href="social/linkedin/wipi-open-source-1200x1500.png"><img src="social/linkedin/wipi-open-source-1200x1500.png" alt="Wipi open source poster showing Codex and Claude Code tasks" width="420"></a>
+</p>
+
 <img src="docs/images/wipi-bar.png" alt="Wipi bar showing two sample projects in progress" width="438">
 
 <details>

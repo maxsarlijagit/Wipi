@@ -4,6 +4,10 @@
 
 **Un pequeño focus desk para Windows.** Seguí varias tareas de Codex sin cambiar de ventana y recibí avisos suaves cuando terminan. La barra tiene una taza con vapor animado, cinco temas y una posición que podés elegir arrastrándola.
 
+<p align="center">
+  <a href="social/linkedin/wipi-open-source-1200x1500.png"><img src="social/linkedin/wipi-open-source-1200x1500.png" alt="Pieza de Wipi open source con tareas de Codex y Claude Code" width="420"></a>
+</p>
+
 <img src="docs/images/wipi-bar.png" alt="Barra Wipi con dos proyectos de ejemplo en curso" width="438">
 
 <details>
