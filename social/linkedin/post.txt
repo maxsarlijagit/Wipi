@@ -1,0 +1,7 @@
+Cuando trabajo en varios proyectos con agentes, quiero saber qué sigue en marcha sin abrir cinco ventanas.
+
+Por eso hice Wipi ☕: una barra flotante para Windows que muestra tareas activas de Codex y Claude Code y avisa cuando terminan. Se puede mover, cambiar de tema y sumar avisos de ChatGPT web.
+
+Lo comparto como open source (MIT): https://github.com/maxsarlijagit/Wipi
+
+#OpenSource #Windows #Codex #ClaudeCode

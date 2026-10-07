@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wipi · Open source</title>
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    html, body { width: 1200px; height: 1500px; margin: 0; overflow: hidden; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      color: #f5f1e8;
+      background:
+        radial-gradient(ellipse 620px 610px at 78% 72%, rgba(80, 133, 118, .15), transparent 73%),
+        radial-gradient(ellipse 560px 490px at 12% 31%, rgba(211, 139, 111, .09), transparent 75%),
+        #15211f;
+    }
+    .poster { position: relative; width: 1200px; height: 1500px; padding: 76px 78px 62px; }
+    .poster::before {
+      content: ''; position: absolute; inset: 22px; border: 1px solid rgba(225, 239, 226, .12);
+      border-radius: 28px; pointer-events: none;
+    }
+    .topline { display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 2; }
+    .brand { display: flex; align-items: center; gap: 15px; }
+    .brand img { width: 52px; height: 52px; }
+    .brand strong { font-size: 24px; font-weight: 750; letter-spacing: .08em; }
+    .eyebrow { color: #b4c8ba; font-size: 14px; font-weight: 700; letter-spacing: .18em; }
+    .accent-rule { width: 51px; height: 4px; border-radius: 4px; background: #e5a98e; margin-top: 86px; }
+    h1 { font-size: 78px; line-height: 1.04; letter-spacing: -.055em; font-weight: 680; margin: 24px 0 0; max-width: 1030px; }
+    h1 span { color: #edb398; }
+    .dek { font-size: 22px; line-height: 1.44; font-weight: 400; color: #b7c5bc; max-width: 880px; margin: 28px 0 0; }
+    .body-rule { position: absolute; left: 78px; right: 78px; top: 540px; height: 1px; background: rgba(224, 237, 227, .18); }
+    .features { position: absolute; left: 80px; top: 630px; width: 300px; z-index: 2; }
+    .feature { padding: 0 0 30px; margin-bottom: 30px; border-bottom: 1px solid rgba(225, 239, 226, .15); }
+    .feature:last-child { border-bottom: 0; }
+    .feature .num { display: block; color: #e9ae92; font-size: 12px; font-weight: 750; letter-spacing: .18em; margin-bottom: 9px; }
+    .feature strong { display: block; font-size: 25px; line-height: 1.12; font-weight: 650; letter-spacing: -.025em; }
+    .feature small { display: block; color: #a9b9af; font-size: 15px; line-height: 1.35; margin-top: 9px; }
+    .visual-ground { position: absolute; left: 410px; top: 572px; width: 728px; height: 798px; border: 1px solid rgba(231, 178, 150, .18); border-radius: 45px; transform: rotate(-2deg); background: rgba(237, 177, 145, .035); }
+    .app-shot { position: absolute; left: 438px; top: 566px; width: 660px; height: auto; filter: drop-shadow(0 32px 44px rgba(0, 0, 0, .34)); }
+    .bottomline { position: absolute; bottom: 79px; left: 78px; right: 78px; display: flex; align-items: flex-end; justify-content: space-between; border-top: 1px solid rgba(225, 239, 226, .18); padding-top: 23px; }
+    .repo { font-size: 18px; font-weight: 650; letter-spacing: -.01em; }
+    .footnote { font-size: 12px; color: #aab9af; text-align: right; line-height: 1.45; letter-spacing: .025em; }
+  </style>
+</head>
+<body>
+  <main class="poster">
+    <div class="topline">
+      <div class="brand"><img src="../../assets/wipi.png" alt=""><strong>WIPI</strong></div>
+      <div class="eyebrow">OPEN SOURCE &nbsp;·&nbsp; WINDOWS</div>
+    </div>
+    <div class="accent-rule"></div>
+    <h1>Varios proyectos.<br><span>Una sola mirada.</span></h1>
+    <p class="dek">Una barra flotante que muestra qué sigue en curso y avisa cuando Codex o Claude Code terminan.</p>
+    <div class="body-rule"></div>
+    <section class="features" aria-label="Qué hace Wipi">
+      <div class="feature"><span class="num">01 / EN CURSO</span><strong>Seguí el estado.</strong><small>Proyecto, fuente y último paso registrado.</small></div>
+      <div class="feature"><span class="num">02 / AL TERMINAR</span><strong>Recibí el aviso.</strong><small>Notificaciones suaves para volver cuando importa.</small></div>
+      <div class="feature"><span class="num">03 / TU ESPACIO</span><strong>Movela a gusto.</strong><small>Cinco temas y una taza siempre presente.</small></div>
+    </section>
+    <div class="visual-ground"></div>
+    <img class="app-shot" src="../../docs/images/wipi-panel.png" alt="Wipi mostrando tareas de Codex y Claude Code">
+    <div class="bottomline">
+      <div class="repo">github.com/maxsarlijagit/Wipi</div>
+      <div class="footnote">LICENCIA MIT<br>INTERFAZ REAL · PROYECTOS DE EJEMPLO</div>
+    </div>
+  </main>
+</body>
+</html>
